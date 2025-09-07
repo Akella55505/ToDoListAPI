@@ -10,6 +10,6 @@ public class ListController {
 
     @GetMapping("/test")
     public String returnString() {
-        return "This is a test string";
+        return "This is a test string 2";
     }
 }
