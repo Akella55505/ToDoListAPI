@@ -1,6 +1,7 @@
 package com.akella.todolistapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+        return taskRepository.findAll(Sort.by(Sort.Direction.ASC, "deadlineDateTime"));
     }
 
     @PatchMapping("/tasks/{id}")
