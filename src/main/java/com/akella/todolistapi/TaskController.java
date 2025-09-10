@@ -11,8 +11,12 @@ import java.util.List;
 @CrossOrigin
 public class TaskController {
 
+    private final TaskRepository taskRepository;
+
     @Autowired
-    private TaskRepository taskRepository;
+    public TaskController(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @PostMapping("/tasks")
     public ResponseEntity<?> saveTask(@RequestBody Task task) {
