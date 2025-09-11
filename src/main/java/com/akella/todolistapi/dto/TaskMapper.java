@@ -1,4 +1,6 @@
-package com.akella.todolistapi;
+package com.akella.todolistapi.dto;
+
+import com.akella.todolistapi.model.Task;
 
 public class TaskMapper {
 

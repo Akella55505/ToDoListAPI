@@ -1,4 +1,4 @@
-package com.akella.todolistapi;
+package com.akella.todolistapi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
