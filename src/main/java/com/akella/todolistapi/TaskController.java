@@ -19,25 +19,31 @@ public class TaskController {
     }
 
     @PostMapping("/tasks")
-    public ResponseEntity<?> saveTask(@RequestBody Task task) {
+    public ResponseEntity<TaskDTO> saveTask(@RequestBody TaskDTO taskDto) {
         try {
-            taskRepository.save(task);
+            Task task = TaskMapper.toEntity(taskDto);
+            Task saved = taskRepository.save(task);
+            return ResponseEntity.ok(TaskMapper.toDTO(saved));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/tasks")
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll(Sort.by(Sort.Direction.ASC, "deadlineDateTime"));
+    public List<TaskDTO> getAllTasks() {
+        return taskRepository.findAll(Sort.by(Sort.Direction.ASC, "deadlineDateTime"))
+                .stream()
+                .map(TaskMapper::toDTO)
+                .toList();
     }
 
     @PatchMapping("/tasks/{id}")
-    public Task completeTask(@PathVariable("id") Long id) {
-        Task task = taskRepository.getReferenceById(id);
+    public ResponseEntity<TaskDTO> completeTask(@PathVariable("id") Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found"));
         task.setIsCompleted(Boolean.TRUE);
-        return taskRepository.save(task);
+        Task updated = taskRepository.save(task);
+        return ResponseEntity.ok(TaskMapper.toDTO(updated));
     }
 
     @DeleteMapping("/tasks/{id}")
