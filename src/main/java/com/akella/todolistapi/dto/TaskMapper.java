@@ -4,8 +4,8 @@ import com.akella.todolistapi.model.Task;
 
 public class TaskMapper {
 
-    public static TaskDTO toDTO(Task task) {
-        return new TaskDTO(
+    public static TaskDto toDto(Task task) {
+        return new TaskDto(
                 task.getId(),
                 task.getDescription(),
                 task.getDeadlineDateTime(),
@@ -13,7 +13,7 @@ public class TaskMapper {
         );
     }
 
-    public static Task toEntity(TaskDTO dto) {
+    public static Task toEntity(TaskDto dto) {
         Task task = new Task();
         task.setId(dto.id());
         task.setDescription(dto.description());
