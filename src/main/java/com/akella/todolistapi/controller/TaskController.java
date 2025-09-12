@@ -1,7 +1,7 @@
 package com.akella.todolistapi.controller;
 
 import com.akella.todolistapi.repository.TaskRepository;
-import com.akella.todolistapi.dto.TaskDTO;
+import com.akella.todolistapi.dto.TaskDto;
 import com.akella.todolistapi.dto.TaskMapper;
 import com.akella.todolistapi.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,31 +23,31 @@ public class TaskController {
     }
 
     @PostMapping("/tasks")
-    public ResponseEntity<TaskDTO> saveTask(@RequestBody TaskDTO taskDto) {
+    public ResponseEntity<TaskDto> saveTask(@RequestBody TaskDto taskDto) {
         try {
             Task task = TaskMapper.toEntity(taskDto);
             Task saved = taskRepository.save(task);
-            return ResponseEntity.ok(TaskMapper.toDTO(saved));
+            return ResponseEntity.ok(TaskMapper.toDto(saved));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @GetMapping("/tasks")
-    public List<TaskDTO> getAllTasks() {
+    public List<TaskDto> getAllTasks() {
         return taskRepository.findAll(Sort.by(Sort.Direction.ASC, "deadlineDateTime"))
                 .stream()
-                .map(TaskMapper::toDTO)
+                .map(TaskMapper::toDto)
                 .toList();
     }
 
     @PatchMapping("/tasks/{id}")
-    public ResponseEntity<TaskDTO> completeTask(@PathVariable("id") Long id) {
+    public ResponseEntity<TaskDto> completeTask(@PathVariable("id") Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
         task.setIsCompleted(Boolean.TRUE);
         Task updated = taskRepository.save(task);
-        return ResponseEntity.ok(TaskMapper.toDTO(updated));
+        return ResponseEntity.ok(TaskMapper.toDto(updated));
     }
 
     @DeleteMapping("/tasks/{id}")
