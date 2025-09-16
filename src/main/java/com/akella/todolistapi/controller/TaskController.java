@@ -7,7 +7,6 @@ import com.akella.todolistapi.dto.TaskMapper;
 import com.akella.todolistapi.model.Task;
 import com.akella.todolistapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
