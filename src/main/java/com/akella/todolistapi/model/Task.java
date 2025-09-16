@@ -19,4 +19,8 @@ public class Task {
     private String description;
     @Column(nullable = false)
     private Boolean isCompleted = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
