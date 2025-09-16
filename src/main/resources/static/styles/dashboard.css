@@ -363,11 +363,6 @@
     transform: scale(1.1);
 }
 
-.task-action-btn.edit:hover {
-    background: var(--info);
-    color: white;
-}
-
 .task-action-btn.delete:hover {
     background: var(--danger);
     color: white;

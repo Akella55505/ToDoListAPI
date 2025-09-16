@@ -5,7 +5,6 @@ class DashboardManager {
         this.tasks = [];
         this.currentFilter = 'all';
         this.isLoading = false;
-        this.currentEditTask = null;
         this.init();
     }
 
@@ -59,30 +58,8 @@ class DashboardManager {
     }
 
     bindModalEvents() {
-        // Task modal
-        const modalCloseBtn = document.getElementById('modalCloseBtn');
-        const modalCancelBtn = document.getElementById('modalCancelBtn');
-        const modalSaveBtn = document.getElementById('modalSaveBtn');
-        const editTaskForm = document.getElementById('editTaskForm');
-
-        if (modalCloseBtn) {
-            modalCloseBtn.addEventListener('click', () => Modal.hide('taskModal'));
-        }
-
-        if (modalCancelBtn) {
-            modalCancelBtn.addEventListener('click', () => Modal.hide('taskModal'));
-        }
-
-        if (modalSaveBtn) {
-            modalSaveBtn.addEventListener('click', () => this.saveTaskEdit());
-        }
-
-        if (editTaskForm) {
-            editTaskForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.saveTaskEdit();
-            });
-        }
+        // Only confirmation modal events now
+        // Task edit modal removed
     }
 
     async handleLogout() {
@@ -264,9 +241,6 @@ class DashboardManager {
                     ` : ''}
                 </div>
                 <div class="task-actions">
-                    <button class="task-action-btn edit" onclick="dashboard.editTask(${task.id})" title="Edit task">
-                        ✏️
-                    </button>
                     <button class="task-action-btn delete" onclick="dashboard.deleteTask(${task.id})" title="Delete task">
                         🗑️
                     </button>
@@ -304,84 +278,6 @@ class DashboardManager {
             if (error.message !== 'Authentication required') {
                 Toast.error('Error connecting to server');
             }
-        }
-    }
-
-    editTask(id) {
-        const task = this.tasks.find(t => t.id === id);
-        if (!task) return;
-
-        this.currentEditTask = task;
-
-        // Populate modal form
-        const editDescription = document.getElementById('editDescription');
-        const editDeadline = document.getElementById('editDeadline');
-        const editCompleted = document.getElementById('editCompleted');
-
-        if (editDescription) editDescription.value = task.description;
-        if (editCompleted) editCompleted.checked = task.isCompleted;
-
-        if (editDeadline && task.deadlineDateTime) {
-            // Convert to local datetime-local format
-            const date = new Date(task.deadlineDateTime);
-            const localDateTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-                .toISOString().slice(0, 16);
-            editDeadline.value = localDateTime;
-        } else if (editDeadline) {
-            editDeadline.value = '';
-        }
-
-        Modal.show('taskModal');
-    }
-
-    async saveTaskEdit() {
-        if (!this.currentEditTask || this.isLoading) return;
-
-        const description = document.getElementById('editDescription').value.trim();
-        const deadline = document.getElementById('editDeadline').value;
-        const isCompleted = document.getElementById('editCompleted').checked;
-
-        if (!description) {
-            Toast.error('Please enter a task description');
-            return;
-        }
-
-        const updatedTask = {
-            description: description,
-            isCompleted: isCompleted
-        };
-
-        if (deadline) {
-            updatedTask.deadlineDateTime = deadline + ':00';
-        } else {
-            updatedTask.deadlineDateTime = null;
-        }
-
-        this.isLoading = true;
-        const saveBtn = document.getElementById('modalSaveBtn');
-        const originalText = saveBtn.textContent;
-        saveBtn.textContent = 'Saving...';
-        saveBtn.disabled = true;
-
-        try {
-            const response = await API.put(`${API_CONFIG.ENDPOINTS.TASKS}/${this.currentEditTask.id}`, updatedTask);
-
-            if (response.ok) {
-                Toast.success('Task updated successfully!');
-                Modal.hide('taskModal');
-                await this.loadTasks();
-            } else {
-                Toast.error('Failed to update task');
-            }
-        } catch (error) {
-            console.error('Error updating task:', error);
-            if (error.message !== 'Authentication required') {
-                Toast.error('Error connecting to server');
-            }
-        } finally {
-            this.isLoading = false;
-            saveBtn.textContent = originalText;
-            saveBtn.disabled = false;
         }
     }
 
