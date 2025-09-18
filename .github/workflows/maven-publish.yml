@@ -50,9 +50,9 @@ jobs:
       - name: Run tests with Maven
         run: mvn clean verify
         env:
-          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
-          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/todo_db
+          SPRING_DATASOURCE_USERNAME: todo_user
+          SPRING_DATASOURCE_PASSWORD: todo_pass
           API_SECRET: ${{ secrets.API_SECRET }}
           API_EXPIRATION_TIME: ${{ secrets.API_EXPIRATION_TIME }}
 
