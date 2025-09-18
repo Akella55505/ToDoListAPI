@@ -53,6 +53,8 @@ jobs:
           SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          API_SECRET: ${{ secrets.API_SECRET }}
+          API_EXPIRATION_TIME: ${{ secrets.API_EXPIRATION_TIME }}
 
   docker:
     runs-on: ubuntu-latest
