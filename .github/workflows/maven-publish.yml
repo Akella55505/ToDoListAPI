@@ -14,8 +14,8 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_USER: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
-          POSTGRES_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          POSTGRES_USER: todouser
+          POSTGRES_PASSWORD: todopass
           POSTGRES_DB: tododb
         ports:
           - 5432:5432
