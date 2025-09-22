@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/", "/index.html", "/auth.html", "/dashboard.html").permitAll()
                         .requestMatchers("/styles/**", "/js/**", "/css/**", "/images/**").permitAll()
-                        .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers("/actuator/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         .requestMatchers("/tasks/**").authenticated()
@@ -83,7 +84,7 @@ public class SecurityConfig {
                 "Authorization", "Content-Type", "X-Requested-With"
         ));
 
-        configuration.setExposedHeaders(Arrays.asList(
+        configuration.setExposedHeaders(List.of(
                 "Authorization"
         ));
 
