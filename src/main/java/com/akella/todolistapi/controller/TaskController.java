@@ -58,7 +58,7 @@ public class TaskController {
             Task task = taskRepository.findByIdAndUser(id, currentUser)
                     .orElseThrow(() -> new IllegalArgumentException("Task not found or access denied"));
 
-            task.setIsCompleted(Boolean.TRUE);
+            task.setIsCompleted(!task.getIsCompleted());
             Task updated = taskRepository.save(task);
             return ResponseEntity.ok(TaskMapper.toDto(updated));
         } catch (IllegalArgumentException e) {
