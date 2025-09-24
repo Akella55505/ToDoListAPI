@@ -39,10 +39,11 @@ docker:
   stage: docker
   image: docker:27.0.3
   services:
-    - docker:27.0.3-dind
+    - docker:27.0.3
   variables:
+    DOCKER_HOST: unix:///var/run/docker.sock
     DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_CERTDIR: ""
     DOCKER_USERNAME: $DOCKER_USERNAME
     DOCKER_PASSWORD: $DOCKER_PASSWORD
     DOCKER_IMAGE: $DOCKER_IMAGE
