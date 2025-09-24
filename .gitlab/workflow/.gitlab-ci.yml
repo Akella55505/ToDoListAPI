@@ -24,6 +24,8 @@ build-test:
     POSTGRES_DB: "todo_db"
     API_SECRET: $API_SECRET
     API_EXPIRATION_TIME: $API_EXPIRATION_TIME
+  before_script:
+    - apt-get update && apt-get install -y postgresql-client
   script:
     - echo "Waiting for Postgres..."
     - until pg_isready -h postgres -U "$POSTGRES_USER" -d "$POSTGRES_DB"; do sleep 3; done
