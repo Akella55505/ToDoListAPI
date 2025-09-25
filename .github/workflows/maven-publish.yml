@@ -58,7 +58,7 @@ jobs:
           API_EXPIRATION_TIME: ${{ secrets.API_EXPIRATION_TIME }}
 
       - name: Upload JAR
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: todo-api-jar
           path: target/*.jar
@@ -69,10 +69,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download JAR artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: todo-api-jar
           path: ./app
