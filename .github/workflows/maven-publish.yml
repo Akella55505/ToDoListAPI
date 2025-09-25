@@ -57,6 +57,12 @@ jobs:
           API_SECRET: ${{ secrets.API_SECRET }}
           API_EXPIRATION_TIME: ${{ secrets.API_EXPIRATION_TIME }}
 
+      - name: Upload JAR
+        uses: actions/upload-artifact@v3
+        with:
+          name: todo-api-jar
+          path: target/*.jar
+
   docker:
     runs-on: ubuntu-latest
     needs: build-test  # only run if tests pass
@@ -64,6 +70,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: todo-api-jar
+          path: ./app
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
