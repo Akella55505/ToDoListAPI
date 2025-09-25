@@ -34,3 +34,6 @@ build/
 
 ### Docker Compose ###
 docker-compose.yml
+
+### deploy ###
+deploy.cmd
