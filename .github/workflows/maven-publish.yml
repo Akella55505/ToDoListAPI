@@ -102,5 +102,4 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
           script: |
-            cd /d D:\My java projects\ToDoListAPI
-            deploy.cmd
+            cmd.exe /c 'cd /d "D:\My java projects\ToDoListAPI" && deploy.cmd'
